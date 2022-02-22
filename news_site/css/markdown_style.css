@@ -1,0 +1,480 @@
+/* This is the style from the export from WriteMonkey markdown note-taking app on Windows.  Credit to WriteMonkey*/
+
+
+html {
+    font-size: 16px;
+}
+
+body {
+    font: 100%/1.375 AvenirNext-Regular, Futura, "Century Gothic", AppleGothic, Corbel, "Myriad Pro", "Lucida Grande", "Trebuchet Ms", sans-serif;
+    color: #111;
+    padding: 0 5% 1rem;
+    -webkit-font-smoothing: antialiased;
+}
+
+a {
+    color: crimson;
+}
+
+a:hover, a:focus, a:active {
+    color: #ff2450;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: AvenirNextCondensed-DemiBold, AvenirNext-Regular, Avenir-Black, Futura, "Century Gothic", AppleGothic, Corbel, "Myriad Pro", "Lucida Grande", "Trebuchet Ms", sans-serif;
+    margin: 0 1rem;
+    padding: .5em 0 0;
+}
+
+h1 {
+    font-size: 2.25rem;
+    line-height: 1.11111;
+}
+
+h2 {
+    font-size: 1.875rem;
+    line-height: 1.33333;
+}
+
+h3 {
+    font-size: 1.375rem;
+    line-height: 1.45455;
+}
+
+h4 {
+    font-size: 1.25rem;
+    line-height: 1.2;
+}
+
+h5, dl {
+    font-size: 1.125rem;
+    line-height: 1.33333;
+}
+
+h6 {
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+pre, label {
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+p {
+    font-size: 1.25em;
+    margin: 0 1rem;
+    padding: .5em 0;
+}
+
+h2+p,
+h3+p,
+h4+p,
+h5+p {
+    padding-top: .125em;
+    margin-top: 1px;
+    border-top: 3px double #888;
+}
+
+ol, ul {
+    font-size: 1rem;
+    line-height: 1.5;
+    margin-top: .5em;
+    margin-bottom: 1em;
+}
+
+ul {
+    margin-left: -1.5rem;
+}
+
+ul ul, ul ol {
+    margin-bottom: .4em;
+}
+
+ul {
+    list-style-position: outside;
+    list-style-type: square;
+}
+
+ol {
+    list-style-position: outside;
+    list-style-type: decimal;
+}
+
+ul li>p,
+ol li>p {
+    margin-left: 0;
+    padding: 0;
+}
+
+pre,
+code {
+    font-family: Consolas, Menlo, Monaco, monospace !important;
+}
+
+pre {
+    margin: 1.5em 1rem;
+    font-size: .875rem;
+    white-space: pre-wrap;
+}
+
+pre code {
+    padding: 1rem;
+    display: inline-block;
+}
+
+p>code,
+ul>code {
+    font-size: .875em;
+    margin: 0;
+    border: 1px solid #ddd;
+    background-color: #f8f8f8;
+    border-radius: 3px;
+    padding: 2px 0 0 0;
+    color: #b31940;
+}
+
+p>code:before,
+p>code:after,
+ul>code:before,
+ul>code:after {
+    content: "\00a0";
+    letter-spacing: -0.2em;
+}
+
+strong, b, dt {
+    font-family: AvenirNext-Medium, AvenirNext-Bold, AvenirNextCondensed-DemiBold, Avenir-Black, Futura, "Century Gothic", AppleGothic, Corbel, "Myriad Pro", "Lucida Grande", "Trebuchet Ms", sans-serif;
+    font-weight: 600;
+}
+
+em, q, blockquote, blockquote p {
+    font-family: AvenirNext-MediumItalic, AvenirNext-BoldItalic, Avenir-MediumOblique, Futura, "Century Gothic", AppleGothic, Corbel, "Myriad Pro", "Lucida Grande", "Trebuchet Ms", sans-serif;
+    font-style: italic;
+}
+
+i {
+    font-family: AvenirNext-Italic, Avenir-Oblique, Futura, "Century Gothic", AppleGothic, Corbel, "Myriad Pro", "Lucida Grande", "Trebuchet Ms", sans-serif;
+    font-style: italic;
+}
+
+blockquote {
+    border-left: .33em solid #aaa;
+    padding: .75em 1.5em;
+    margin: 1em 0 2em 1rem;
+    background-color: #f7f7f7;
+    color: #444;
+    box-shadow: 1px 1px 0 hsla(0, 0%, 0%, .125);
+}
+
+blockquote p {
+    margin: 0;
+}
+
+hr {
+    padding: 1px;
+    border: 1px solid #ccc;
+    background-color: #ddd;
+    box-sizing: content-box;
+    height: 0;
+}
+
+table {
+    border: 1px solid lightgrey;
+    border-collapse: collapse;
+    display: table;
+    empty-cells: hide;
+    margin: 1em 0 2em;
+    padding: 0;
+    /*table-layout: fixed;*/
+}
+
+caption {
+    display: table-caption;
+    font-weight: 700;
+}
+
+col {
+    display: table-column;
+}
+
+colgroup {
+    display: table-column-group;
+}
+
+tbody {
+    display: table-row-group;
+}
+
+tfoot {
+    display: table-footer-group;
+}
+
+thead {
+    display: table-header-group;
+}
+
+td, th {
+    border: 1px solid lightgrey;
+    display: table-cell;
+}
+
+tr {
+    display: table-row;
+}
+
+table th, table td {
+    font-size: .8rem;
+    padding: 1em;
+}
+
+q, blockquote {
+    quotes: none;
+}
+
+q:before, q:after, blockquote:before, blockquote:after {
+    content: "";
+    content: none;
+}
+
+a img {
+    border: none;
+}
+
+button, input {
+    line-height: normal;
+}
+
+button, input, select, textarea {
+    font-size: 100%;
+    margin: 0;
+    vertical-align: baseline;
+}
+
+button, input[type="button"], input[type="reset"], input[type="submit"] {
+    cursor: pointer;
+}
+
+textarea {
+    overflow: auto;
+    vertical-align: top;
+    resize: vertical;
+}
+
+#wrapper {
+    margin-bottom: 0;
+}
+
+img,
+#wrapper img {
+    max-width: 100%;
+    height: auto;
+}
+
+dd {
+    padding-left: 0;
+    margin-left: 1rem;
+    margin-bottom: 1em;
+}
+
+table tr:nth-child(even) {
+    background: rgba(200, 200, 200, 0.25);
+}
+
+figure {
+    display: inline-block;
+    position: relative;
+    margin: 1em 0 2em;
+    padding: 1em;
+    background-color: #e6e6e6;
+    border: 1px solid #ddd;
+}
+
+figcaption {
+    font-family: AvenirNext-Italic, AvenirNext-Regular, Futura, "Century Gothic", AppleGothic, Corbel, "Myriad Pro", "Lucida Grande", "Trebuchet Ms", sans-serif;
+    font-style: italic;
+    text-align: center;
+}
+
+.poetry #wrapper pre {
+    display: block;
+    font-family: Georgia, Garamond, serif !important;
+    font-size: 110% !important;
+    font-style: italic;
+    line-height: 1.6;
+    margin-left: 1em;
+}
+
+.poetry #wrapper pre code {
+    font-family: Georgia, Garamond, serif !important;
+
+}
+
+sup, sub, a.footnote {
+    font-size: 1.4ex;
+    height: 0;
+    line-height: 1;
+    position: relative;
+    vertical-align: super;
+}
+
+sub {
+    vertical-align: sub;
+    top: -1px;
+}
+
+.footnote {
+    font-size: .8rem;
+    vertical-align: super;
+}
+
+.footnotes p {
+    font-size: 1.9ex;
+}
+
+ul ul,
+ol ol {
+    margin-left: -1em;
+}
+
+li ul,
+li ol {
+    margin-bottom: 0;
+}
+
+
+/*  */
+@media print {
+    body {
+        overflow: auto;
+    }
+
+    img, pre, blockquote, table, figure, p {
+        page-break-inside: avoid;
+    }
+
+    #wrapper {
+        background: #fff;
+        color: #000;
+        font-size: 85%;
+        padding: 10px;
+        position: relative;
+        text-indent: 0;
+    }
+}
+
+@media screen {
+    .inverted, .inverted #wrapper {
+        background: #222;
+    }
+
+    .inverted pre,
+    .inverted img {
+        border-color: #111;
+        background: #1a1a1a;
+    }
+
+    .inverted pre * {
+        background: #1a1a1a !important;
+    }
+
+    .inverted p, .inverted td, .inverted li, .inverted h1, .inverted h2, .inverted h3, .inverted h4, .inverted h5, .inverted h6, .inverted pre, .inverted code, .inverted th, .inverted .math, .inverted caption, .inverted dd, .inverted dt {
+        color: #f9f9f9 !important;
+    }
+
+    .inverted blockquote,
+    .inverted figure,
+    .inverted p>code,
+    .inverted ul>code,
+    .inverted hr {
+        border-color: #000;
+        background-color: #111;
+        color: #f9f9f9;
+    }
+
+    .inverted table tr:nth-child(odd), .inverted table th:nth-child(odd), .inverted table td:nth-child(odd) {
+        background: none;
+    }
+
+    .inverted a {
+        color: #ff5778;
+    }
+}
+
+.max-width {
+    max-width: 100%;
+    height: auto;
+}
+
+@media screen and (max-width: 750px) {
+    -webkit-text-size-adjust: none;
+}
+
+
+@media screen {
+    html, body {
+        font-size: 1em !important;
+
+    }
+}
+    .skinny {
+        padding-top: 3vh;
+        width: 80%;
+        max-width: 1500px !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+    }
+
+    .skinnier {
+        padding-top: 3vh;
+        width: 60%;
+        max-width: 1500px !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+    }
+@media print {
+    html, body {
+        font-size: .9em !important;
+        max-width: 100%;
+        margin-left: 0em;
+        margin-right: 0em;
+    }
+}
+
+body {
+    padding: 0em !important;
+    max-width: 100% !important;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    margin: 0em;
+}
+
+
+
+a {
+    color: inherit !important;
+    text-decoration: none !important;
+
+}
+
+a:hover {
+    color: red !important;
+}
+
+.inline-comment {
+    border-left: .4em solid #F2D400 !important;
+    background-color: #F2E6AA !important;
+    border-radius: 2px;
+    padding: .2em;
+    margin-left: 0em;
+    margin-right: .1em;
+}
+
+.block-comment {
+    font-size: 1em !important;
+    background-color: #F2E6AA !important;
+    border-radius: 3px;
+    padding: .5em 1.5em;
+    transform: rotate(1.3deg);
+    margin: 1.5em;
+    border-top: .5em solid #F2D400 !important;
+}
