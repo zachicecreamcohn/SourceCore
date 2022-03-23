@@ -6,6 +6,7 @@ session_start();
 
 <head>
 <meta charset = 'UTF-8'>
+<link rel="icon" href="favicon.ico">
 <title>Home</title>
 <link rel = 'stylesheet' href = 'css/style.css'>
 <link rel = 'stylesheet' href = 'https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.css' integrity = 'sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y' crossorigin = 'anonymous'>
@@ -123,8 +124,8 @@ if (isset($_POST['edit-link-post'])) {
         $stmt->fetch();
         $stmt->close();
     
-    
-    
+        // if current user is not author and not admin, redirect to article page
+        
         if ( $author != $_SESSION[ 'current_user' ] && ($admin_status == 0) ) {
             echo "<p>You are not the author of this article.</p>";
             // after 3 seconds, redirect to article.php
@@ -139,12 +140,14 @@ if (isset($_POST['edit-link-post'])) {
         $stmt -> close();
 
         echo "<p>Article updated.</p>";
-        // after 3 seconds, redirect to article.php
+        // after 1 second, redirect to article.php
         header("Refresh: 1; URL=article.php?id=$article_id");
+        exit;
     } else {
         echo "<p>You must be logged in to edit an article.</p>";
         // after 3 seconds, redirect to article.php
         header("Refresh: 3; URL=article.php?id=$article_id");
+        exit;
     }
 }
 
@@ -163,26 +166,32 @@ if (isset($_POST['edit-reg-post'])) {
     // check that token is valid
     if (!hash_equals($_SESSION['token'], $token)) {
         die("Request forgery detected");
-        header("Location: editarticle.php?id=$article_id");
+        header("Location: editarticle.php?id='$article_id'");
         exit;
     }
 
+
+
     if ( isset( $_SESSION[ 'current_user' ] ) ) {
-        $stmt = $mysqli->prepare( 'SELECT authorID FROM articles WHERE id=?' );
+        
+
+        $stmt = $mysqli->prepare( 'SELECT authorID FROM articles WHERE id=?');
         if ( !$stmt ) {
             echo 'Query Prep Failed: ' . $mysqli->error;
             exit;
         }
-    
-        $stmt->bind_param( 'i', $article_id );
+        
+        $stmt->bind_param( 'i', $article_id);
         $stmt->execute();
         $stmt->bind_result( $author );
         $stmt->fetch();
         $stmt->close();
+
+
     
     
-    
-        if ( $author != $_SESSION[ 'current_user' ] ) {
+        if (( $author != $_SESSION[ 'current_user' ]) && ($admin_status == 0) ) {
+
             echo "<p>You are not the author of this article.</p>";
             // after 3 seconds, redirect to article.php
             header("Refresh: 3; URL=article.php?id=$article_id");
@@ -209,12 +218,14 @@ if (isset($_POST['edit-reg-post'])) {
         $stmt -> close();
 
         echo "<p>Article updated.</p>";
-        // redirect to article.php
-        header("Location: article.php?id=$article_id");
+        // after 1 second, redirect to article.php
+        header("Refresh: 1; URL=article.php?id=$article_id");
+        exit;
     } else {
         echo "<p>You must be logged in to edit an article.</p>";
         // after 3 seconds, redirect to article.php
         header("Refresh: 1; URL=article.php?id=$article_id");
+        exit;
     }
 }
 
@@ -242,6 +253,7 @@ if ( isset( $_SESSION[ 'current_user' ] ) ) {
         echo "<p>You do not have permission to edit this article.</p>";
         // redirect to article page
         header( "refresh:3;url=article.php?id=$article_id" );
+        exit;
     }
 
     // chec to see if articles exist
@@ -259,7 +271,10 @@ if ( isset( $_SESSION[ 'current_user' ] ) ) {
 
     // if article does not exist, redirect to index
     if ( $articleExists == null ) {
+        echo "<p>Article does not exist.</p>";
+        
         header( 'Location: index.php' );
+
         exit;
     }
 
@@ -279,10 +294,10 @@ if ( isset( $_SESSION[ 'current_user' ] ) ) {
     if ($type == 'linked_post') {
         $thisToken = $_SESSION['token'];
         echo "
-        <form action='editarticle.php?id=$article_id' method='post'>
+        <form action='editarticle.php?id=".htmlspecialchars($article_id)."' method='post'>
         <input type='hidden' name='post_type' value='linked_post'>
-        <input type='hidden' name='article_id' value='$article_id'>
-        <input type='hidden'name='token' value='$thisToken'>
+        <input type='hidden' name='article_id' value='".htmlspecialchars($article_id)."'>
+        <input type='hidden'name='token' value='".htmlspecialchars($thisToken)."'>
         
         <input id='title-input' class='input-field' type='text' name='title' placeholder='Title'><br>
         <input id='link-input' class='input-field' type='url' name='link' placeholder='Link' required><br>
@@ -306,10 +321,10 @@ if ( isset( $_SESSION[ 'current_user' ] ) ) {
 
         $thisToken = $_SESSION['token'];
         echo"
-        <form action='editarticle.php?id=$article_id' method='post'>
+        <form action='editarticle.php?id=".htmlspecialchars($article_id)."' method='post'>
         <input type='hidden' name='post_type' value='linked_post'>
-        <input type='hidden' name='article_id' value='$article_id'>
-        <input type='hidden'name='token' value='$thisToken'>
+        <input type='hidden' name='article_id' value='".htmlspecialchars($article_id)."'>
+        <input type='hidden'name='token' value='".htmlspecialchars($thisToken)."'>
         <input id='title-input' class='input-field' type='text' name='title' placeholder='Title'><br>";
 
         // if link is not empty, display link

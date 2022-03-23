@@ -416,6 +416,13 @@ li ol {
 
     }
 }
+
+
+
+
+
+
+
     .skinny {
         padding-top: 3vh;
         width: 80%;
@@ -431,6 +438,12 @@ li ol {
         margin-left: auto !important;
         margin-right: auto !important;
     }
+
+
+
+
+    
+
 @media print {
     html, body {
         font-size: .9em !important;
@@ -478,3 +491,5 @@ a:hover {
     margin: 1.5em;
     border-top: .5em solid #F2D400 !important;
 }
+
+

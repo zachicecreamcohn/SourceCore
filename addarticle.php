@@ -5,6 +5,7 @@ session_start();
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="icon" href="favicon.ico">
     <title>Add Article</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/markdown_style.css">
@@ -138,7 +139,7 @@ session_start();
             echo "<textarea class='input-field' rows='5' cols='100'name='blurb' placeholder='blurb'></textarea><br>";
             echo "<textarea class='input-field' rows='15' cols='5'name='article' placeholder='Article Content'></textarea><br>";
             echo "<input type='hidden' name='articleType' value='regarticle'>";
-            echo "<input type='hidden' name='token' value='$_SESSION[token]'>";
+            echo "<input type='hidden' name='token' value='".htmlspecialchars($_SESSION['token'])."'>";
             // TODO: Add photo upload feature
             echo "<input class='button' type='submit' name='addarticle' value='Publish Article'>";
             echo "</form>";
@@ -162,7 +163,7 @@ session_start();
             echo "<input class='input-field' type='url' name='link' placeholder='Link' required ><br>";
             echo "<textarea class='input-field' rows='5' cols='100'name='blurb' placeholder='blurb'></textarea><br>";
             echo "<input type='hidden' name='articleType' value='linkarticle'>";
-            echo "<input type='hidden' name='token' value='$_SESSION[token]'>";
+            echo "<input type='hidden' name='token' value='".htmlspecialchars($_SESSION['token'])."'>";
             // TODO: Add photo upload feature
             echo "<input class='button' type='submit' name='addarticle' value='Publish Link'>";
             echo "</form>";
@@ -191,7 +192,7 @@ session_start();
             echo "<input class='input-field' type='url' name='link' placeholder='Link' required><br>";
             echo "<textarea class='input-field' rows='5' cols='100' name='blurb' placeholder='blurb'></textarea><br>";
             echo "<input type='hidden' name='articleType' value='linkarticle'>";
-            echo "<input type='hidden' name='token' value='$_SESSION[token]'>";
+            echo "<input type='hidden' name='token' value='".htmlspecialchars($_SESSION['token'])."'>";
             // TODO: Add photo upload feature
             echo "<input class='button' type='submit' name='addarticle' value='Publish Link'>";
             echo "</form>";
@@ -201,8 +202,8 @@ session_start();
             echo "<p>For information on how to get 'Author' permission, please contact <a href='mailto:zcohn@wustl.edu' class='red'>Zach Cohn</a></p>";
             echo "<p>Or, you can</p>";
             echo "<form action='/news_site/requestAuthorPermissions.php' method='post'>
-            <input type='hidden' name='user_id' value='".$_SESSION['current_user']."'>
-            <input type='hidden' name='token' value='".$_SESSION['token']."'>
+            <input type='hidden' name='user_id' value='".htmlspecialchars($_SESSION['current_user'])."'>
+            <input type='hidden' name='token' value='".htmlspecialchars($_SESSION['token'])."'>
             <button class='button' type='submit' name='requestauthorstatus' >Request Author Status</button></form>";
 
 

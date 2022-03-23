@@ -150,9 +150,9 @@ session_start();
         $current_user_id = $_SESSION['current_user'];
 
         echo "<td><form action='approveauthor.php' method='post'>" .
-            "<input type='hidden' name='user_id' value='" . $user_id . "'>" .
-            "<input type='hidden' name='current_user_id' value='" . $current_user_id . "'>" .
-            "<input type='hidden' name='token' value='" . $_SESSION['token'] . "'>" .
+            "<input type='hidden' name='user_id' value='" . htmlspecialchars($user_id) . "'>" .
+            "<input type='hidden' name='current_user_id' value='" . htmlspecialchars($current_user_id) . "'>" .
+            "<input type='hidden' name='token' value='" . htmlspecialchars($_SESSION['token']) . "'>" .
             "<input type='submit' name='approve_author_request' value='Approve'>" .
             "</form></td>";
 

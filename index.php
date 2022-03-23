@@ -9,6 +9,9 @@ session_start();
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/markdown_style.css">
     <script src="https://kit.fontawesome.com/7b8bf01427.js" crossorigin="anonymous"></script> <!-- this grants access to a bunch of icons -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- set favicon to favicon.ico -->
+    <link rel="icon" href="favicon.ico">
 </head>
 <body>
     <div id="header">
@@ -113,7 +116,7 @@ session_start();
         if ($count > 0) {
 
             // get title, link, postDateTime, blurb, and author from database where topic in database = 1
-            $stmt = $mysqli->prepare("select title, imgURL, link, postDateTime, blurb, authorID, id, postType from articles where $topic = 1 order by postDateTime asc");
+            $stmt = $mysqli->prepare("select title, imgURL, link, postDateTime, blurb, authorID, id, postType from articles where $topic = 1 order by postDateTime desc");
             if (!$stmt) {
                 echo "Query Prep Failed: " . $mysqli->error;
                 exit;
@@ -129,7 +132,7 @@ session_start();
 
     } else {
         // get title, link, postDateTime, blurb, and author from database
-        $stmt = $mysqli->prepare("select title, imgURL, link, postDateTime, blurb, authorID, id, postType from articles order by postDateTime asc");
+        $stmt = $mysqli->prepare("select title, imgURL, link, postDateTime, blurb, authorID, id, postType from articles order by postDateTime desc");
         if (!$stmt) {
             echo "Query Prep Failed: " . $mysqli->error;
             exit;

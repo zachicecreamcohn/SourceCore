@@ -106,30 +106,46 @@ if ( isset( $_SESSION[ 'current_user' ] ) ) {
 
             // get all comments for article
             // for each comment, delete emotes associated with comment
-            $stmt = $mysqli->prepare( 'SELECT commentID FROM comments WHERE articleID=?' );
+            // $stmt = $mysqli->prepare( 'SELECT commentID FROM comments WHERE articleID=?' );
+            // if ( !$stmt ) {
+            //     echo 'Query Prep Failed: (get comments) ' . $mysqli->error;
+            //     exit;
+            // }
+            // $stmt->bind_param( 'i', $article_id );
+            // $stmt->execute();
+            // $stmt->bind_result( $comment_id );
+            
+
+            // while ( $stmt->fetch() ) {
+            //     $stmt2 = $mysqli->prepare( 'DELETE FROM emotes WHERE commentID=?' );
+            //     if ( !$stmt2 ) {
+            //         echo 'Query Prep Failed:(delete emotes) ' . $mysqli->error;
+            //         exit;
+            //     }
+            //     $stmt2->bind_param( 'i', $comment_id );
+            //     $stmt2->execute();
+            //     $stmt2->close();
+
+            // }
+
+
+            // delete emotes
+
+            $stmt = $mysqli->prepare( 'DELETE FROM emotes WHERE articleID=?' );
             if ( !$stmt ) {
-                echo 'Query Prep Failed: ' . $mysqli->error;
+                echo 'Query Prep Failed: (delete emotes) ' . $mysqli->error;
                 exit;
             }
             $stmt->bind_param( 'i', $article_id );
             $stmt->execute();
-            $stmt->bind_result( $comment_id );
-            while ( $stmt->fetch() ) {
-                $stmt2 = $mysqli->prepare( 'DELETE FROM emotes WHERE commentID=?' );
-                if ( !$stmt2 ) {
-                    echo 'Query Prep Failed: ' . $mysqli->error;
-                    exit;
-                }
-                $stmt2->bind_param( 'i', $comment_id );
-                $stmt2->execute();
-                $stmt2->close();
-            }
             $stmt->close();
+
+            
 
             // NOW, delete comments
             $stmt = $mysqli->prepare( 'DELETE FROM comments WHERE articleID=?' );
             if ( !$stmt ) {
-                echo 'Query Prep Failed: ' . $mysqli->error;
+                echo 'Query Prep Failed: (delete comments) ' . $mysqli->error;
                 exit;
             }
             $stmt->bind_param( 'i', $article_id );
@@ -139,7 +155,7 @@ if ( isset( $_SESSION[ 'current_user' ] ) ) {
             // Finally, we delete the article
             $stmt = $mysqli->prepare( 'DELETE FROM articles WHERE id=?' );
             if ( !$stmt ) {
-                echo 'Query Prep Failed: ' . $mysqli->error;
+                echo 'Query Prep Failed (delete from articles where id=?): ' . $mysqli->error;
                 exit;
             }
 
@@ -163,11 +179,11 @@ if ( isset( $_SESSION[ 'current_user' ] ) ) {
 
         <div class='form-container'>
             <form action='deletearticle.php' method='post'>
-                <input type='hidden' name='articleID' value='<?php echo $articleID; ?>'>
+                <input type='hidden' name='articleID' value='<?php echo htmlspecialchars($articleID); ?>'>
                 <h1>Are you sure you want to delete this article?</h1>
-                <input type='hidden' name='token' value='<?php echo $_SESSION['token']; ?>'>
-                <input type='submit' name='delete' value='Yes'>
-                <a href='article.php?id=<?php echo $articleID?>'><input class='button' type='button' value='No'></a>
+                <input type='hidden' name='token' value='<?php echo htmlspecialchars($_SESSION['token']); ?>'>
+                <input type='submit' class='button' name='delete' value='Yes'>
+                <a href='article.php?id=<?php echo htmlspecialchars($articleID) ?>'><input class='button' type='button' value='No'></a>
             </form>
             
         </div>

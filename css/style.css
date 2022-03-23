@@ -31,6 +31,25 @@ body {
 }
 
 
+
+/* on mobile, make article full width */
+@media screen and (max-width: 750px) {
+	.skinny {
+		padding-top: 3vh;
+		width: 100%;
+		max-width: 1500px !important;
+		margin-left: auto !important;
+		margin-right: auto !important;
+	}
+
+	.article {
+		width: 800px;
+		max-width: 1500px !important;
+		margin-left: auto !important;
+		margin-right: auto !important;
+	}
+}
+
 .article {
 	position: relative;
 	/* border: 1px solid #ccc;
@@ -95,6 +114,8 @@ body {
 	background-size: cover;
 	border-radius: 5px;
 }
+
+
 
 .article-img-overlay {
 	position: absolute;
@@ -575,4 +596,70 @@ textarea {
 
 .center-text {
 	text-align: center;
+}
+
+
+.comment-link {
+    padding: 0;
+    background: transparent;
+    border: none;
+    font-style: italic;
+	padding-left: 5px;
+	padding-right: 5px;
+	font-weight : bold;
+}
+
+.comment-link:hover {
+	opacity: 1;
+}
+
+.grey {
+	color: rgb(0, 0, 0);
+	opacity: .3;
+}
+
+
+.edit-delete-container {
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-end;
+	align-items: center;
+	width: 100%;
+	height: auto;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+
+
+
+/* CSS for mobile screens */
+
+
+/* make .article a full-width element on mobile screens */
+@media only screen and (max-width: 600px) {
+	.article {
+		width: 100%;
+	}
+	.article-img {
+		width: 300px;
+		height: 175px;
+	}
+	/* .article-text {f
+		width: 100%;
+	} */
+
+	#upper-header-right {
+		display: none;
+	}
+	#upper-header-left {
+		display: none;
+	}
+	#logo {
+		width: 100%;	
+	}
+	#center-nav a {
+		font-size: 3.5vw !important;
+	}
+
 }

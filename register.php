@@ -5,6 +5,7 @@ session_start();
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="icon" href="favicon.ico">
     <title>Register for an Account</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/markdown_style.css">
@@ -115,6 +116,13 @@ if (isset($_POST['register'])) {
     // code from https://www.w3schools.com/php/filter_validate_email.asp
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         echo "Invalid email address";
+        exit;
+    }
+
+    // check if username contains spaces or special characters
+    // code from https://www.codegrepper.com/code-examples/whatever/regex+for+alphanumeric+without+space+and+special+characters
+    if (preg_match('/[^A-Za-z0-9]/', $username)) {
+        echo "Username must not contain spaces or special characters";
         exit;
     }
 

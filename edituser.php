@@ -5,6 +5,7 @@ session_start();
 <html lang = 'en'>
 <head>
 <meta charset = 'UTF-8'>
+<link rel="icon" href="favicon.ico">
 <title>Edit User</title>
 <link rel = 'stylesheet' href = 'css/style.css'>
 </head>
@@ -52,6 +53,12 @@ if (isset($_POST['edit-display-name'])) {
 if (isset($_POST['edit-username'])) {
 
     $newUsername = $_POST['new_username'];
+    // check if username contains spaces or special characters
+    // code from https://www.codegrepper.com/code-examples/whatever/regex+for+alphanumeric+without+space+and+special+characters
+    if (preg_match('/[^A-Za-z0-9]/', $newUsername)) {
+        echo "Username must not contain spaces or special characters";
+        exit;
+    }
 
     $token = $_POST['token'];
 

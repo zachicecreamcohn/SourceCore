@@ -96,8 +96,8 @@ if (!isset($_SESSION['current_user'])) {
                     echo "<p>For information on how to get 'Author' permission, please contact <a href='mailto:zcohn@wustl.edu'>Zach Cohn</a></p>";
                     echo "<p>Or, you can</p>";
                     echo "<form action='/news_site/requestAuthorPermissions.php' method='post'>
-                    <input type='hidden' name='user_id' value='".$_SESSION['current_user']."'>
-                    <input type='hidden' name='token' value='".$_SESSION['token']."'>
+                    <input type='hidden' name='user_id' value='".htmlspecialchars($_SESSION['current_user'])."'>
+                    <input type='hidden' name='token' value='".htmlspecialchars($_SESSION['token'])."'>
                     <button type='submit' name='requestauthorstatus' >Request Author Status</button></form>";
 
                 }

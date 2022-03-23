@@ -5,6 +5,7 @@ session_start();
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="icon" href="favicon.ico">
     <title>Register for an Account</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/markdown_style.css">

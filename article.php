@@ -11,7 +11,8 @@ session_start();
 <link rel = 'stylesheet' href = 'https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.css' integrity = 'sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y' crossorigin = 'anonymous'>
 <link rel = 'stylesheet' href = 'css/markdown_style.css'>
 <script src = 'https://kit.fontawesome.com/7b8bf01427.js' crossorigin = 'anonymous'></script>
-<script src='js/scrollPositions.js'></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">  
+
 
 
 </head>
@@ -148,21 +149,22 @@ if ( $_GET[ 'id' ] ) {
 
         // if author is current user, display edit button
         if ( ( $_SESSION[ 'current_user' ] == $authorID ) || ($admin_status == 1) ) {
-            echo "<a href='editarticle.php?id=$id' class='red' >Edit</a><a>|</a>
-            <a href='deletearticle.php?id=$id' class='red' >Delete</a>";
+            
+            echo "<a href='editarticle.php?id=".htmlspecialchars($id)."' class='red' >Edit</a><a>|</a>
+            <a href='deletearticle.php?id=".htmlspecialchars($id)."' class='red' >Delete</a>";
         } //TODO: make this work
 
 
         // display some stuff
         echo $Parsedown->text( '# ' . $title );
-        echo '<p><i>Posted by ' . $author . ' on ' . $postDateTime . '</i></p><br>';
+        echo '<p><i>Posted by ' . htmlspecialchars($author) . ' on ' . htmlspecialchars($postDateTime) . '</i></p><br>';
 
-        echo "<a href='$link' target='_blank'><div class='big-article-img' style='background-image: url($imgURL)'></div></a>";
+        echo "<a href='".htmlspecialchars($link)."' target='_blank'><div class='big-article-img' style='background-image: url(".htmlspecialchars($imgURL).")'></div></a>";
         echo '<br>';
 
         echo $Parsedown->text( '---' );
-        echo "<p>$blurb</p>";
-        echo "<p>Visit the original page: <a id='reference-link' target='_blank' href='$link'>$link</a></p>";
+        echo "<p>".htmlspecialchars($blurb)."</p>";
+        echo "<p>Visit the original page: <a id='reference-link' target='_blank' href='".htmlspecialchars($link)."'>".htmlspecialchars($link)."</a></p>";
     } else {
 
         // display the regular article in markdown
@@ -183,25 +185,27 @@ if ( $_GET[ 'id' ] ) {
 
          // if author is current user, display edit button
          if ( ( $_SESSION[ 'current_user' ] == $authorID ) || ($admin_status == 1) ) {
-            echo "<a href='editarticle.php?id=$id' class='red' >Edit </a><a>|</a>
-            <a href='deletearticle.php?id=$id' class='red' >Delete</a>";
+            echo "<a href='editarticle.php?id=".htmlspecialchars($id)."' class='red' >Edit </a><a>|</a>
+            <a href='deletearticle.php?id=".htmlspecialchars($id)."' class='red' >Delete</a>";
         }
 
 
 
 
         echo $Parsedown->text( '# ' . $title );
-        echo '<p><i>Posted by ' . $author . ' on ' . $postDateTime . '</i></p><br>';
+        echo '<p><i>Posted by ' . htmlspecialchars($author) . ' on ' . htmlspecialchars($postDateTime) . '</i></p><br>';
 
         // display image
-        echo "<div class='big-article-img' style='background-image: url($imgURL)'></div>";
+        echo "<div class='big-article-img' style='background-image: url(".htmlspecialchars($imgURL).")'></div>";
         echo '<br>';
-
+        
         echo $Parsedown->text( '---' );
-
         echo $Parsedown->text( $articleContent );
-        // prints text as HTML ( with Markdown syntax )
 
+        
+
+        // prints text as HTML ( with Markdown syntax )
+        // NOTE: this doesn't need htmlspecialchars() because it's already been escaped by parsedown
     }
 
     // COMMENTS
@@ -218,9 +222,9 @@ if ( $_GET[ 'id' ] ) {
         echo "
     <div class='comment-form'>
         <form action='commentbackend.php' method='post'>
-            <input type='hidden' name='origin_article' value='$_GET[id]'>
-            <input type='hidden' name='user_id' value='$_SESSION[current_user]'>
-            <input type='hidden' name='token' value='$_SESSION[token]'>
+            <input type='hidden' name='origin_article' value='".htmlspecialchars($_GET['id'])."'>
+            <input type='hidden' name='user_id' value='".htmlspecialchars($_SESSION['current_user'])."'>
+            <input type='hidden' name='token' value='".htmlspecialchars($_SESSION['token'])."'>
 
             <div class='new-comment-group'>
                 <textarea class='input-field comment-box' name='comment' rows='2' cols='100' placeholder='Comment'></textarea>
@@ -230,7 +234,7 @@ if ( $_GET[ 'id' ] ) {
         </form>
     </div>";
     } else {
-        echo "<p>Please <a href='login.php' class='red' >login</a> to comment</p>";
+        echo "<p>Please <a href='login.php' class='red'>login</a> to comment</p>";
     }
 
 echo "<div class='thin-line'></div>";
@@ -271,14 +275,14 @@ echo "<div class='thin-line'></div>";
 
 
 
-    $stmt = $mysqli->prepare('SELECT users.display_name, users.id, comments.likes, comments.datetime_posted, comments.commentID, comments.commentContent FROM comments JOIN users ON users.id = comments.posterID AND comments.articleID = ?');
+    $stmt = $mysqli->prepare('SELECT users.display_name, users.id, comments.likes, comments.dislikes, comments.datetime_posted, comments.commentID, comments.commentContent FROM comments JOIN users ON users.id = comments.posterID AND comments.articleID = ?');
     if ( !$stmt ) {
         echo 'Query Prep Failed: ' . $mysqli->error;
         exit;
     }
     $stmt->bind_param( 'i', $_GET[ 'id' ] );
     $stmt->execute();
-    $stmt->bind_result( $display_name, $user_id, $likes, $datetime_posted, $commentID, $commentContent);
+    $stmt->bind_result( $display_name, $user_id, $likes, $dislikes, $datetime_posted, $commentID, $commentContent);
 
     // check if there are any comments
     $isFirst = true;
@@ -293,11 +297,17 @@ echo "<div class='thin-line'></div>";
             }
             $isFirst = false;
         }
-        echo "<div class='comment' id='$commentID'>";
-        echo "<p><b>$display_name</b> on $datetime_posted</p>";
-        echo "<p id='content_$commentID'>$commentContent</p>";
-        
 
+
+        echo "<div class='comment' id='".htmlspecialchars($commentID)."'>";
+        echo "<p><b>".htmlspecialchars($display_name)."</b> on ".htmlspecialchars($datetime_posted)."</p>";
+        echo "<p id='content_".htmlspecialchars($commentID)."'>".htmlspecialchars($commentContent)."</p>";
+        
+        // cast $likes, $dislikes to int
+        $likes = (int)$likes;
+        $dislikes = (int)$dislikes;
+        $like_count = $likes - $dislikes;
+        
         
         // if user is logged in, display like/dislike buttons
         if (isset($_SESSION['current_user'])) {
@@ -305,9 +315,9 @@ echo "<div class='thin-line'></div>";
 
         echo "<div class='likedislike-container'>";
         echo "<form action='commentbackend.php' method='post'>
-        <input type='hidden' name='origin_article_id' value='$_GET[id]'>
-        <input type='hidden' name='comment_id' value='$commentID'>
-        <input type='hidden' name='token' value='$_SESSION[token]'>";
+        <input type='hidden' name='origin_article_id' value='".htmlspecialchars($_GET['id'])."'>
+        <input type='hidden' name='comment_id' value='".htmlspecialchars($commentID)."'>
+        <input type='hidden' name='token' value='".htmlspecialchars($_SESSION['token'])."'>";
         
         if ( array_key_exists( $commentID, $likedComments ) ) {
             if ( $likedComments[ $commentID ] == 1 ) {
@@ -327,19 +337,21 @@ echo "<div class='thin-line'></div>";
         
         echo "</form>";
 
+        
+
         // display number of likes
-        echo "<p><i>$likes</i></p>";
+        echo "<p><i>".htmlspecialchars($like_count)."</i></p>";
 
         // dislike
         echo "<form action='commentbackend.php' method='post'>
-        <input type='hidden' name='origin_article_id' value='$_GET[id]'>
-        <input type='hidden' name='comment_id' value='$commentID'>
-        <input type='hidden' name='token' value='$_SESSION[token]'>";
+        <input type='hidden' name='origin_article_id' value='".htmlspecialchars($_GET['id'])."'>
+        <input type='hidden' name='comment_id' value='".htmlspecialchars($commentID)."'>
+        <input type='hidden' name='token' value='".htmlspecialchars($_SESSION['token'])."'>";
   
         
         
  
-        if ( array_key_exists( $commentID, $likedComments ) ) {
+        if (array_key_exists( $commentID, $likedComments ) ) {
             if ( $likedComments[ $commentID ] == -1 ) {
                 echo "<button type='submit' name='dislikecomment' value='Dislike' class='highlighted-dislike'>
                     <i class='fa-solid fa-thumbs-down'></i>
@@ -367,28 +379,31 @@ echo "<div class='thin-line'></div>";
 
             
             echo "<form action='commentbackend.php' method='post'>
-        <input type='hidden' name='origin_article_id' value='$_GET[id]'>
+        <input type='hidden' name='origin_article_id' value='".htmlspecialchars($_GET['id'])."'>
 
-        <input type='hidden' name='comment_id' value='$commentID'>
-        <input type='hidden' name='token' value='$_SESSION[token]'>
+        <input type='hidden' name='comment_id' value='".htmlspecialchars($commentID)."'>
+        <input type='hidden' name='token' value='".htmlspecialchars($_SESSION['token'])."'>
         
-        <input type='submit' name='deletecomment' class='redtext'value='Delete'>
+        
+            <input type='submit' name='deletecomment' class='grey comment-link'value='Delete&nbsp;'>
         </form>";
+
             // edit button
-            echo "<button class='editComment' id='edit_$commentID'>Edit</button>";
+            echo "<button class='editComment comment-link grey' id='edit_".htmlspecialchars($commentID)."'>Edit</button>";
+            // echo "</div>";
             echo "<form action='commentbackend.php' method='post'>
-        <input type='hidden' name='origin_article_id' value='$_GET[id]'>
-        <input type='hidden' name='comment_id' value='$commentID'>
-        <input type='hidden' name='token' value='$_SESSION[token]'>
+        <input type='hidden' name='origin_article_id' value='".htmlspecialchars($_GET['id'])."'>
+        <input type='hidden' name='comment_id' value='".htmlspecialchars($commentID)."'>
+        <input type='hidden' name='token' value='".htmlspecialchars($_SESSION['token'])."'>
         <div class='new-comment-group'>
 
-            <textarea class='no-show input-field comment-box' id='editedComment_$commentID'name='comment_content' rows='2' cols='100'></textarea>
-            <input class='no-show type='submit' id='submit_$commentID' name='editcomment' value='Edit'>
+            <textarea class='no-show input-field comment-box' id='editedComment_".htmlspecialchars($commentID)."' name='comment_content' rows='2' cols='100'></textarea>
+            <input class='no-show type='submit' id='submit_".htmlspecialchars($commentID)."' name='editcomment' value='Edit'>
             </form>
-            <button class='no-show updateComment button' id='update_$commentID' >Update</button>
+            <button class='no-show updateComment button' id='update_".htmlspecialchars($commentID)."' >Update</button>
             </div>";
         
-        }
+        
 
         echo "<script>
         let editBtn_$commentID = document.getElementById('edit_$commentID');
@@ -396,9 +411,9 @@ echo "<div class='thin-line'></div>";
             // hide edit button
             this.style.display = 'none';
             
-            let textarea_$commentID = document.getElementById('editedComment_$commentID');
+            let textarea_$commentID= document.getElementById('editedComment_$commentID');
             // paste the content of the comment into the textarea
-            textarea_$commentID.value = '$commentContent';
+            textarea_$commentID.value = '".addslashes($commentContent) ."';
             // show textarea
             textarea_$commentID.style.display = 'block';
             // show update button
@@ -415,9 +430,10 @@ echo "<div class='thin-line'></div>";
         }
             
             </script>";
+    }
         } else {
     
-        echo "<div class='likedislike-container'><i class=' greyed-out fa-solid fa-thumbs-up'></i><p><i>$likes</i></p><i class=' greyed-out fa-solid fa-thumbs-down '></i></div>";
+        echo "<div class='likedislike-container'><i class=' greyed-out fa-solid fa-thumbs-up'></i><p><i>".htmlspecialchars($likes)."</i></p><i class=' greyed-out fa-solid fa-thumbs-down '></i></div>";
         }
         echo '</div>';
         echo "<div class='thin-line'></div>";
@@ -443,15 +459,9 @@ echo "<div class='thin-line'></div>";
 if (isset($_GET['scroll'])) {
     echo "
     <script>
-        // select item with class 'comment-form' and get scroll height
-        let commentForm = document.getElementsByClassName('comment-form')[0];
-        let commentFormHeight = commentForm.scrollHeight;
-    console.log(commentFormHeight);
-        // scroll to  comment form
-        let additional_height = 230;
-        let newScrollHeight = commentFormHeight + additional_height;
-        console.log(newScrollHeight);
-        window.scrollTo(0, newScrollHeight);
+        document.getElementsByClassName('comment-form')[0].scrollIntoView({
+            behavior: 'auto'
+        });
         </script>";
 }
     ?>

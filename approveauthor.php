@@ -152,7 +152,7 @@ require 'database.php';
         echo "Query Prep Failed: " . $mysqli->error;
         exit;
     }
-    echo "user_id: " . $user_id;
+    echo "user_id: " . htmlspecialchars($user_id);
     $stmt -> bind_param('i', $user_id);
     $stmt -> execute();
     $stmt -> bind_result($author_status);

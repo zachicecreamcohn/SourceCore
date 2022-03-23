@@ -7,6 +7,7 @@ session_start();
     <meta charset="UTF-8">
     <title>My Profile</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="favicon.ico">
     <link rel="stylesheet" href="css/markdown_style.css">
 
     <script src="https://kit.fontawesome.com/7b8bf01427.js" crossorigin="anonymous"></script>
