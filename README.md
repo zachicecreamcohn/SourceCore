@@ -1,5 +1,5 @@
 # SourceCore | Technical Theatre News
-[Visit the site (*SourceCore*)][http://ec2-3-142-143-25.us-east-2.compute.amazonaws.com/news_site]
+[Visit the site (*SourceCore*)](http://ec2-3-142-143-25.us-east-2.compute.amazonaws.com/news_site)
 
 
 ## Creative Portion
