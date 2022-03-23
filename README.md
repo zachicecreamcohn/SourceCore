@@ -1,11 +1,5 @@
-# Module 3 - 497970
-
-[Link to my news site on my instance (*SourceCore*)][http://ec2-3-142-143-25.us-east-2.compute.amazonaws.com/news_site]
-
-## Important Login Info
-|username|Password|Explanation|
-|---|---|---|
-|admin|admin|While you can register for as many accounts as you'd like, the admin has the unique ability to grant 'Author Permissions.' I will explain below.|
+# SourceCore | Technical Theatre News
+[Visit the site (*SourceCore*)][http://ec2-3-142-143-25.us-east-2.compute.amazonaws.com/news_site]
 
 
 ## Creative Portion
